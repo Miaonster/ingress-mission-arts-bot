@@ -1,26 +1,21 @@
 const TelegramBot = require('node-telegram-bot-api')
 const handle = require('./handle')
 
-// replace the value below with the Telegram token you receive from @BotFather
-const token = '400840416:AAFykJxd9mlstQ_ZiCXf4cpZ_2U0RysKISE'
+const token = process.env.TOKEN
 
-// Create a bot that uses 'polling' to fetch new updates
+if (!token) {
+  console.error('No Token')
+  process.exit(1)
+}
+
 const bot = new TelegramBot(token, {polling: true})
 
-// Matches "/echo [whatever]"
 bot.onText(/\/q (.+)/, (msg, match) => {
   handle({ msg, match, bot, id: msg.chat.id })
-
-  // arrs.forEach(({ message, options }) => {
-  //   bot.sendMessage(chatId, message, options)
-  // })
 })
 
-// Listen for any kind of message. There are different kinds of
-// messages.
-// bot.on('message', (msg) => {
-//   const chatId = msg.chat.id
+bot.onText(/\/q@ingress_misssion_arts_bot/, (msg, match) => {
+  bot.sendMessage(msg.chat.id, '查询任务格式为: /q 任务名')
+})
 
-//   // send a message to the chat acknowledging receipt of their message
-//   bot.sendMessage(chatId, 'Received your message')
-// });
+console.log('start')
