@@ -6,7 +6,8 @@
   "author": "witcher42 <witcher42.dy@gmail.com>",
   "license": "MIT",
   "scripts": {
-    "start": "pm2 start src/index.js",
+    "start": "pm2 reload ecosystem.config.js --env production",
+    "start-dev": "pm2 reload ecosystem.config.js --env dev",
     "dev": "node src/index.js",
     "lint": "eslint --ext .js,.vue --ignore-path .gitignore .",
     "test": "npm run mocha",
