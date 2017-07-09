@@ -105,7 +105,6 @@ class Handler {
 
     result.push(`${name}`)
     result.push(`${m.desc}`)
-    result.push(this.handleLinks(name, m.shortUrl))
 
     await this.sendText(result.join('\n'), { parse_mode: undefined })
   }
