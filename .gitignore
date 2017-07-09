@@ -1,2 +1,6 @@
 node_modules
 ingress-medal-arts.json
+
+ingress-medal-arts.test.json
+
+package-lock.json
