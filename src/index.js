@@ -18,4 +18,8 @@ bot.onText(/\/q@ingress_misssion_arts_bot/, (msg, match) => {
   bot.sendMessage(msg.chat.id, '查询任务格式为: /q 任务名')
 })
 
+bot.onText(/^\/q$/, (msg, match) => {
+  bot.sendMessage(msg.chat.id, '查询任务格式为: /q 任务名')
+})
+
 console.log('start')
