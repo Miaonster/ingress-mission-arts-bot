@@ -23,15 +23,12 @@ module.exports = {
         NODE_ENV: 'production',
         DATA_PATH: path.join(__dirname, '../ingress-medal-arts.json'),
       },
+      watch: ['src'],
     },
 
     {
       name: 'IngressMissionArtsBotSchedule',
       script: 'src/schedule.js',
-      env: {
-        COMMON_VARIABLE: 'true',
-        DATA_PATH: path.join(__dirname, './ingress-medal-arts.json'),
-      },
       env_production: {
         NODE_ENV: 'production',
         DATA_PATH: path.join(__dirname, '../ingress-medal-arts.json'),

@@ -5,7 +5,7 @@ class Handler {
   constructor ({ bot, id }) {
     this.bot = bot
     this.id = id
-    this.reg = /^\[.*\]( |)/
+    this.reg = /^\[.*\]\s?/
   }
 
   sendText (msg, options = {}) {
@@ -37,9 +37,10 @@ class Handler {
     return cards
       .filter((v) => {
         const name = v.name.toLowerCase()
+        const t = title.toLowerCase()
         if (v.closed) return false
-        if (name === title) return true
-        if (name.indexOf(title) !== -1) return true
+        if (name === t) return true
+        if (name.indexOf(t) !== -1) return true
         return false
       })
       .reverse()
@@ -49,7 +50,7 @@ class Handler {
           const sname = s.name.replace(this.reg, '')
           return vname === sname
         })
-        if (index === i) return true
+        return index === i
       })
   }
 
