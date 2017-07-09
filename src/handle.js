@@ -10,7 +10,7 @@ class Handler {
 
   sendText (msg, options = {}) {
     const setttins = Object.assign({}, {
-      parse_mode: 'Markdown',
+      parse_mode: undefined,
       disable_web_page_preview: 'true',
     }, options)
 
@@ -29,7 +29,7 @@ class Handler {
     }
 
     const plain = fs.readFileSync(dataPath)
-    const { cards } = JSON.parse(plain)
+    const cards = JSON.parse(plain)
     return cards
   }
 
@@ -101,13 +101,27 @@ class Handler {
     const name = m.name.replace(this.reg, '')
     const links = this.handleLinks(name, m.shortUrl)
 
-    await this.sendText(`任务已找到 ${links}`)
+    await this.sendText(`任务已找到 ${links}`, { parse_mode: 'Markdown' })
     await this.sendCoverPhoto(m)
 
-    result.push(`${name}`)
+    const labels = []
+
+    if (m.labels) {
+      m.labels.forEach((label) => {
+        if (label.color === 'red' || label.color === 'black') {
+          labels.push(label.name)
+        }
+      })
+    }
+
+    if (labels.length) {
+      result.push(`‼️ ${labels.join(' | ')}\n`)
+    }
+
+    result.push(`${m.name}`)
     result.push(`${m.desc}`)
 
-    await this.sendText(result.join('\n'), { parse_mode: undefined })
+    await this.sendText(result.join('\n'))
   }
 
   async handleNull () {
