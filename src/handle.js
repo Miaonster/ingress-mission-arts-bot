@@ -1,5 +1,5 @@
 const fs = require('fs')
-const path = require('path')
+const trello = require('./trello')
 
 class Handler {
   constructor ({ bot, id }) {
@@ -14,8 +14,6 @@ class Handler {
       disable_web_page_preview: 'true',
     }, options)
 
-    console.log(msg.length)
-
     return this.bot.sendMessage(this.id, msg, setttins)
   }
 
@@ -23,9 +21,15 @@ class Handler {
     return this.bot.sendPhoto(this.id, msg, { disable_notification: 'false' })
   }
 
-  getCards () {
-    const trello = fs.readFileSync(path.join(__dirname, '../ingress-medal-arts.json'))
-    const { cards } = JSON.parse(trello)
+  async getCards () {
+    const dataPath = process.env.DATA_PATH || '../ingress-medal-arts.json'
+
+    if (!fs.existsSync(dataPath)) {
+      await trello.retrieve(dataPath)
+    }
+
+    const plain = fs.readFileSync(dataPath)
+    const { cards } = JSON.parse(plain)
     return cards
   }
 
@@ -138,7 +142,7 @@ module.exports = async function handle ({ msg, match, bot, id }) {
   try {
     await handler.handle({ msg, match })
   } catch (error) {
-    await handler.sendText(`哇哦出错了，快召唤 @Miaonster 解八哥，错误快照：\n\n\`\`\`\n${error}\n\`\`\``)
+    await handler.sendText(`哇哦出错了，快召唤 @Miaonster ，错误快照：\n\n\`\`\`\n${error}\n\`\`\``)
     console.error(error)
   }
 }

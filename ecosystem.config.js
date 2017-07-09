@@ -1,3 +1,5 @@
+const path = require('path')
+
 const host = process.env.HOST
 const user = process.env.USER
 const token = process.env.TOKEN
@@ -15,9 +17,20 @@ module.exports = {
       script: 'src/index.js',
       env: {
         COMMON_VARIABLE: 'true',
+        DATA_PATH: path.join(__dirname, './ingress-medal-arts.json'),
       },
       env_production: {
         NODE_ENV: 'production',
+        DATA_PATH: path.join(__dirname, '../ingress-medal-arts.json'),
+      },
+    },
+
+    {
+      name: 'IngressMissionArtsBotSchedule',
+      script: 'src/schedule.js',
+      env_production: {
+        NODE_ENV: 'production',
+        DATA_PATH: path.join(__dirname, '../ingress-medal-arts.json'),
       },
     },
   ],

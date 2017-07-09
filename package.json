@@ -14,6 +14,8 @@
     "mocha": "mocha --compilers js:babel-core/register"
   },
   "dependencies": {
+    "node-fetch": "^1.7.1",
+    "node-schedule": "^1.2.3",
     "node-telegram-bot-api": "^0.27.1"
   },
   "devDependencies": {

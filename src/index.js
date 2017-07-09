@@ -11,7 +11,6 @@ if (!token) {
 const bot = new TelegramBot(token, {polling: true})
 
 bot.onText(/\/q (.+)/, (msg, match) => {
-  console.log(`@${msg.chat.username}: ${msg.text}`)
   handle({ msg, match, bot, id: msg.chat.id })
 })
 
