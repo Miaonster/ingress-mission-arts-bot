@@ -100,11 +100,12 @@ class Handler {
     const name = m.name.replace(this.reg, '')
     const links = this.handleLinks(name, m.shortUrl)
 
-    await this.sendText(`任务已找到，请稍候喔~ ${links}`)
+    await this.sendText(`任务已找到 ${links}`)
     await this.sendCoverPhoto(m)
 
-    result.push(`*${name}*`)
+    result.push(`${name}`)
     result.push(`${m.desc}`)
+    result.push(this.handleLinks(name, m.shortUrl))
 
     await this.sendText(result.join('\n'), { parse_mode: undefined })
   }
