@@ -8,6 +8,6 @@ if (!path) {
 }
 
 schedule.scheduleJob('* * */3 * * *', function () {
-  trello.trieve(path)
+  trello.retrieve(path)
   console.log('trello trieved successfully')
 })
