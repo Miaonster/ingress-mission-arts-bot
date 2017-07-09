@@ -9,7 +9,7 @@ if (!path) {
   process.exit(1)
 }
 
-schedule.scheduleJob('* */3 * * *', function () {
+schedule.scheduleJob('42 * * * *', function () {
   trello.retrieve(path).then((params) => {
     console.log('trello trieved successfully')
   }).catch((err) => {
