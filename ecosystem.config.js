@@ -46,7 +46,7 @@ module.exports = {
       ref: 'origin/master',
       repo: 'https://github.com/Witcher42/ingress-mission-arts-bot.git',
       path: '/root/ingress-mission-arts-bot',
-      'post-deploy': `npm install --production && export TOKEN=${token} && pm2 reload ecosystem.config.js --env production`,
+      'post-deploy': `yarn --production && export TOKEN=${token} && pm2 reload ecosystem.config.js --env production`,
     },
   },
 }
