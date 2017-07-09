@@ -97,16 +97,17 @@ class Handler {
   async handleSingle (missions) {
     const result = []
     const m = missions[0]
+    const name = m.name.replace(this.reg, '')
+    const links = this.handleLinks(name, m.shortUrl)
 
-    await this.sendText('任务已找到，请稍候喔~')
+    await this.sendText(`任务已找到，请稍候喔~ ${links}`)
     await this.sendCoverPhoto(m)
 
-    const name = m.name.replace(this.reg, '')
     result.push(`*${name}*`)
     result.push(`${m.desc}`)
     result.push(this.handleLinks(name, m.shortUrl))
 
-    await this.sendText(result.join('\n'))
+    await this.sendText(result.join('\n'), { parse_mode: undefined })
   }
 
   async handleNull () {
@@ -119,7 +120,7 @@ class Handler {
     }
 
     const title = match[1]
-    const cards = this.getCards()
+    const cards = await this.getCards()
     const missions = this.filterMissions(title, cards)
 
     let result = []
