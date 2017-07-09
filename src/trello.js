@@ -18,7 +18,7 @@ function parseJSON (response) {
 }
 
 function retrieve (dataPath) {
-  fetch(url)
+  return fetch(url)
     .then(checkStatus)
     .then(parseJSON)
     .then(function (data) {
