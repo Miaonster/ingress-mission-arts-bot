@@ -28,6 +28,10 @@ module.exports = {
     {
       name: 'IngressMissionArtsBotSchedule',
       script: 'src/schedule.js',
+      env: {
+        COMMON_VARIABLE: 'true',
+        DATA_PATH: path.join(__dirname, './ingress-medal-arts.json'),
+      },
       env_production: {
         NODE_ENV: 'production',
         DATA_PATH: path.join(__dirname, '../ingress-medal-arts.json'),
@@ -46,7 +50,7 @@ module.exports = {
       ref: 'origin/master',
       repo: 'https://github.com/Witcher42/ingress-mission-arts-bot.git',
       path: '/root/ingress-mission-arts-bot',
-      'post-deploy': `yarn --production && export TOKEN=${token} && pm2 reload ecosystem.config.js --env production`,
+      'post-deploy': `yarn --production && export TOKEN=${token} && pm2 startOrRestart ecosystem.config.js --env production`,
     },
   },
 }
