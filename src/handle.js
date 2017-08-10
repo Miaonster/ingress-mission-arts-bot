@@ -1,5 +1,4 @@
-const fs = require('fs')
-const trello = require('./trello')
+const MongoClient = require('mongodb').MongoClient
 
 class Handler {
   constructor ({ bot, id }) {
@@ -21,29 +20,13 @@ class Handler {
     return this.bot.sendPhoto(this.id, msg, { disable_notification: 'false' })
   }
 
-  async getCards () {
-    const dataPath = process.env.DATA_PATH || '../ingress-medal-arts.json'
-
-    if (!fs.existsSync(dataPath)) {
-      await trello.retrieve(dataPath)
-    }
-
-    const plain = fs.readFileSync(dataPath)
-    const cards = JSON.parse(plain)
-    return cards
-  }
-
-  filterMissions (title, cards) {
-    return cards
-      .filter((v) => {
-        const name = v.name.toLowerCase()
-        const t = title.toLowerCase()
-        if (v.closed) return false
-        if (name === t) return true
-        if (name.indexOf(t) !== -1) return true
-        return false
-      })
-      .reverse()
+  async filterMissions (title) {
+    const mongodbUrl = 'mongodb://localhost:27017/ingress'
+    const db = await MongoClient.connect(mongodbUrl)
+    const collection = db.collection('trello')
+    const pattern = new RegExp(title, 'i')
+    const result = await collection.find({ 'name': pattern }).toArray()
+    return result
       .filter((v, i, self) => {
         const index = self.findIndex((s) => {
           const vname = v.name.replace(this.reg, '')
@@ -134,8 +117,7 @@ class Handler {
     }
 
     const title = match[1]
-    const cards = await this.getCards()
-    const missions = this.filterMissions(title, cards)
+    const missions = await this.filterMissions(title)
 
     let result = []
 
