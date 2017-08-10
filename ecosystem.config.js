@@ -10,8 +10,6 @@ module.exports = {
    * http://pm2.keymetrics.io/docs/usage/application-declaration/
    */
   apps: [
-
-    // First application
     {
       name: 'IngressMissionArtsBot',
       script: 'src/index.js',
@@ -24,15 +22,6 @@ module.exports = {
         DATA_PATH: path.join(__dirname, '../ingress-medal-arts.json'),
       },
       watch: ['src'],
-    },
-
-    {
-      name: 'IngressMissionArtsBotSchedule',
-      script: 'src/schedule.js',
-      env_production: {
-        NODE_ENV: 'production',
-        DATA_PATH: path.join(__dirname, '../ingress-medal-arts.json'),
-      },
     },
   ],
 

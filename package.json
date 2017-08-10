@@ -14,6 +14,7 @@
     "mocha": "mocha --compilers js:babel-core/register"
   },
   "dependencies": {
+    "escape-string-regexp": "^1.0.5",
     "mongodb": "^2.2.31",
     "node-fetch": "^1.7.1",
     "node-schedule": "^1.2.3",

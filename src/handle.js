@@ -1,4 +1,5 @@
 const MongoClient = require('mongodb').MongoClient
+const escapeStringRegexp = require('escape-string-regexp')
 
 class Handler {
   constructor ({ bot, id }) {
@@ -24,7 +25,8 @@ class Handler {
     const mongodbUrl = 'mongodb://localhost:27017/ingress'
     const db = await MongoClient.connect(mongodbUrl)
     const collection = db.collection('trello')
-    const pattern = new RegExp(title, 'i')
+    const fixed = escapeStringRegexp(title)
+    const pattern = new RegExp(fixed, 'i')
     const result = await collection.find({ 'name': pattern }).toArray()
     return result
       .filter((v, i, self) => {
